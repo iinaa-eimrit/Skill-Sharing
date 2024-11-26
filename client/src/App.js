@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
 function App() {
   const [talks, setTalks] = useState([]);
@@ -42,58 +43,68 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Skill Sharing</h1>
+      <header className="App-header">
+        <h1>Skill Sharing</h1>
+      </header>
       
-      <h2>Submit a Talk</h2>
-      <form onSubmit={handleNewTalk}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={newTalk.title}
-          onChange={(e) => setNewTalk({...newTalk, title: e.target.value})}
-        />
-        <input
-          type="text"
-          placeholder="Presenter"
-          value={newTalk.presenter}
-          onChange={(e) => setNewTalk({...newTalk, presenter: e.target.value})}
-        />
-        <input
-          type="text"
-          placeholder="Summary"
-          value={newTalk.summary}
-          onChange={(e) => setNewTalk({...newTalk, summary: e.target.value})}
-        />
-        <button type="submit">Submit Talk</button>
-      </form>
-
-      <h2>Talks</h2>
-      {talks.map((talk) => (
-        <div key={talk.title}>
-          <h3>{talk.title} <button onClick={() => handleDeleteTalk(talk.title)}>Delete</button></h3>
-          <p>Presenter: {talk.presenter}</p>
-          <p>Summary: {talk.summary}</p>
-          <h4>Comments:</h4>
-          {talk.comments.map((comment, index) => (
-            <p key={index}>{comment.author}: {comment.message}</p>
-          ))}
-          <form onSubmit={handleNewComment}>
+      <main className="App-main">
+        <section className="submit-talk">
+          <h2>Submit a Talk</h2>
+          <form onSubmit={handleNewTalk} className="talk-form">
             <input
               type="text"
-              placeholder="Your Name"
-              value={newComment.author}
-              onChange={(e) => setNewComment({...newComment, author: e.target.value, talkTitle: talk.title})}
+              placeholder="Title"
+              value={newTalk.title}
+              onChange={(e) => setNewTalk({...newTalk, title: e.target.value})}
             />
             <input
               type="text"
-              placeholder="Your Comment"
-              value={newComment.message}
-              onChange={(e) => setNewComment({...newComment, message: e.target.value, talkTitle: talk.title})}
+              placeholder="Presenter"
+              value={newTalk.presenter}
+              onChange={(e) => setNewTalk({...newTalk, presenter: e.target.value})}
             />
-            <button type="submit">Add Comment</button>
+            <input
+              type="text"
+              placeholder="Summary"
+              value={newTalk.summary}
+              onChange={(e) => setNewTalk({...newTalk, summary: e.target.value})}
+            />
+            <button type="submit" className="btn btn-primary">Submit Talk</button>
           </form>
-        </div>
-      ))}
+        </section>
+
+        <section className="talks-list">
+          <h2>Talks</h2>
+          {talks.map((talk) => (
+            <div key={talk.title} className="talk-item">
+              <h3>{talk.title} <button onClick={() => handleDeleteTalk(talk.title)} className="btn btn-delete">Delete</button></h3>
+              <p><strong>Presenter:</strong> {talk.presenter}</p>
+              <p><strong>Summary:</strong> {talk.summary}</p>
+              <div className="comments-section">
+                <h4>Comments:</h4>
+                {talk.comments.map((comment, index) => (
+                  <p key={index} className="comment"><strong>{comment.author}:</strong> {comment.message}</p>
+                ))}
+                <form onSubmit={handleNewComment} className="comment-form">
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    value={newComment.author}
+                    onChange={(e) => setNewComment({...newComment, author: e.target.value, talkTitle: talk.title})}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Your Comment"
+                    value={newComment.message}
+                    onChange={(e) => setNewComment({...newComment, message: e.target.value, talkTitle: talk.title})}
+                  />
+                  <button type="submit" className="btn btn-secondary">Add Comment</button>
+                </form>
+              </div>
+            </div>
+          ))}
+        </section>
+      </main>
     </div>
   );
 }
