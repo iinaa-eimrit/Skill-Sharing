@@ -11,13 +11,13 @@ function App() {
   }, []);
 
   const fetchTalks = async () => {
-    const response = await axios.get('http://localhost:5000/talks');
+    const response = await axios.get('https://skill-sharing.onrender.com/talks');
     setTalks(response.data);
   };
 
   const handleNewTalk = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:5000/talks/${newTalk.title}`, {
+    await axios.put(`https://skill-sharing.onrender.com/talks/${newTalk.title}`, {
       presenter: newTalk.presenter,
       summary: newTalk.summary
     });
@@ -27,7 +27,7 @@ function App() {
 
   const handleNewComment = async (e) => {
     e.preventDefault();
-    await axios.post(`http://localhost:5000/talks/${newComment.talkTitle}/comments`, {
+    await axios.post(`https://skill-sharing.onrender.com/talks/${newComment.talkTitle}/comments`, {
       author: newComment.author,
       message: newComment.message
     });
@@ -36,7 +36,7 @@ function App() {
   };
 
   const handleDeleteTalk = async (title) => {
-    await axios.delete(`http://localhost:5000/talks/${title}`);
+    await axios.delete(`https://skill-sharing.onrender.com/talks/${title}`);
     fetchTalks();
   };
 
